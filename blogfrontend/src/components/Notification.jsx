@@ -14,8 +14,6 @@
 //     marginBottom: '10px'
 //   }
 
-
-
 //   const style ={
 //     ...notification,
 //     color: errorMessage ? 'red': 'green'
@@ -27,20 +25,18 @@
 
 // export default Notification
 
-
-const Notification = ({ errorMessage, successMessage }) => {
-  const message = errorMessage||successMessage
+import { useSelector } from 'react-redux'
+const Notification = () => {
+  const { message, type } = useSelector((state) => state.notification)
   if (!message) {
     return null
   }
 
-
-
   return (
-    <div
-      className= {`notification ${errorMessage? 'error' :'success'}`}>
+    <div className={`notification ${type === 'error' ? 'error' : 'success'}`}>
       {message}
     </div>
-  )}
+  )
+}
 
 export default Notification
