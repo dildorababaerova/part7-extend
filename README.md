@@ -7,6 +7,7 @@ Exercises 7.9-7.21
 - `npm install redux`
 - `npm install react-redux`
 - `npm install @reduxjs/toolkit`
+  or `npm install redux react-redux @reduxjs/toolkit`
 
 2. Create src/store.js
 
@@ -27,7 +28,7 @@ const store = configureStore({
 export default store;
 ```
 
-3. Update main.js to use Redux Provider
+3. Update main.js to use Redux Provider. Connect Redux to React (main.js)
 
 ```js
 import { createRoot } from "react-dom/client";
@@ -45,7 +46,7 @@ createRoot(document.getElementById("root")).render(
 
 4. Notification reducer (Redux Toolkit + Thunk)
    In the exercise Redux Thunk is used.
-   The initialState was changed to an object, because notification logic now includes a message type (error or success).
+   The initialState was changed to an object, because notification logic now includes a message type (error/ success).
 
 Note: In the setNotification thunk function, an object is passed to the reducer because the notification initialState contains two properties: message and type
 
@@ -126,3 +127,13 @@ const dispatch = useDispatch();
 - Then call it whenever you need to show a notification:
 
 `dispatch(setNotification(`${blogObject.title} added`, "success", 5));`
+
+Key ideas
+
+- Global notification state is managed by Redux
+
+- Async logic (timeouts) lives in thunk, not in components
+
+- Components only dispatch actions and read state
+
+- message + type stored as one object for clarity
