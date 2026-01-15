@@ -1,0 +1,119 @@
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "root",
+    "name": "Superuser",
+    "password": "salainen"
+}
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "mluukkai",
+    "name": "Matti Luukkainen",
+    "password": "secret"
+}
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "didi",
+    "name": "Didi B",
+    "password": "react"
+}
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title":"mimim",
+    "author":"Salainen",
+    "url": "www.mluukkai.fi",
+    "likes":5555,
+    "userId": "69299b54d5ba667b5578689d"
+}
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title":"gagaagag",
+    "author":"Matti Luukkainen",
+    "url": "www.secret.com",
+    "likes":27299999,
+    "userId": "69299b93d5ba667b5578689f"
+}
+
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "mluukkai",
+    "password": "secret"
+}
+
+###
+POST http://localhost:3003/api/login
+
+Content-Type: application/json
+
+{
+    "username": "root",
+    "password": "salainen"
+}
+
+###
+POST http://localhost:3003/api/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2OTI5OWI5M2Q1YmE2NjdiNTU3ODY4OWYiLCJpYXQiOjE3NjQ2NjQ4NzYsImV4cCI6MTc2NDY2ODQ3Nn0._sKswF75njvNG0nBxW1RBsDMl-dGR2FEI_5ZY88i85Q
+Content-Type: application/json
+
+{
+    "title":"With token test6",
+    "author":"mlukkai",
+    "url": "www.mlik.com",
+    "likes":4545454
+}
+###
+DELETE http://localhost:3003/api/blogs/692d50b1dfdee13863fb018c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2OTI5OWI5M2Q1YmE2NjdiNTU3ODY4OWYiLCJpYXQiOjE3NjQ2NjQ4NzYsImV4cCI6MTc2NDY2ODQ3Nn0._sKswF75njvNG0nBxW1RBsDMl-dGR2FEI_5ZY88i85Q
+
+
+###
+POST http://localhost:3003/api/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2OTI5OWI5M2Q1YmE2NjdiNTU3ODY4OWYiLCJpYXQiOjE3NjQ3NTI0MTAsImV4cCI6MTc2NDc1NjAxMH0.6zsJRsKCIe6L9IoSWMWVAJoQ_R8m7SAEGT_YjJXbcJk
+Content-Type: application/json
+
+{
+    "title":"With token test77",
+    "author":"mluukkai",
+    "url": "www.mluuk.com",
+    "likes":7676721
+}
+###
+DELETE http://localhost:3003/api/blogs/692ffc7b6f30bfb84d91632f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2OTI5OWI5M2Q1YmE2NjdiNTU3ODY4OWYiLCJpYXQiOjE3NjQ3NTI0MTAsImV4cCI6MTc2NDc1NjAxMH0.6zsJRsKCIe6L9IoSWMWVAJoQ_R8m7SAEGT_YjJXbcJk
+
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "Didi",
+    "name": "Dildora",
+    "password": "react"
+}
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "didi",
+    "password": "react"
+}
