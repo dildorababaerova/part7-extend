@@ -137,3 +137,5 @@ Key ideas
 - Components only dispatch actions and read state
 
 - message + type stored as one object for clarity
+
+## Redux, Step 2

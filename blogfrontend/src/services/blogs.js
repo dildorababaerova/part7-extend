@@ -1,5 +1,5 @@
-import axios from 'axios'
-const baseUrl = '/api/blogs'
+import axios from "axios";
+const baseUrl = "/api/blogs";
 
 /*
 const getAll = () => {
@@ -7,43 +7,44 @@ const getAll = () => {
   return request.then(response => response.data)
 }*/
 
-let token = null
+let token = null;
 
 const setToken = (newToken) => {
-  token = `Bearer ${newToken}`
-}
-
+  token = `Bearer ${newToken}`;
+};
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl)
-  return response.data
-}
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
 
-const create =async (newObject) => {
+const create = async (newObject) => {
   const config = {
-    headers : { Authorization: token }
-  }
-  const response = await axios.post(baseUrl, newObject, config)
-  return response.data
-}
+    headers: { Authorization: token },
+  };
+  const response = await axios.post(baseUrl, newObject, config);
+  return response.data;
+};
 
 const update = async (id, newObject) => {
-  const response = await axios.put(`${baseUrl}/${id}`, newObject)
-  return response.data
-}
+  const response = await axios.put(`${baseUrl}/${id}`, newObject);
+  return response.data;
+};
 
-const updateLikes = async (id) => {
-  const response = await axios.put(`${baseUrl}/${id}/likes`)
-  return response.data
-}
+const updateLikes = async (blog) => {
+  const updatedLikes = { ...blog, likes: blog.likes + 1 };
+  const response = await axios.put(`${baseUrl}/${blog.id}/likes`, updatedLikes);
+  return response.data;
+  // return { ...data, id: data._id };
+};
 const deleteBlog = async (id) => {
   const config = {
-    headers : { Authorization: token } }
+    headers: { Authorization: token },
+  };
 
-  const response = await axios.delete(`${baseUrl}/${id}`, config)
-  return response.data
-}
-
+  const response = await axios.delete(`${baseUrl}/${id}`, config);
+  return response.data;
+};
 
 export default {
   getAll,
@@ -51,5 +52,5 @@ export default {
   update,
   setToken,
   updateLikes,
-  deleteBlog
-}
+  deleteBlog,
+};

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import Blog from "./components/Blog";
+import Blogs from "./components/Blogs";
 import Notification from "./components/Notification";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -9,22 +9,21 @@ import Togglable from "./components/Togglable";
 import LogOut from "./components/Logout";
 import Footer from "./components/Footer";
 import { setNotification } from "./reducers/notificationReducer";
+import { appendBlog, initialBlogs } from "./reducers/blogReducer";
 import { useDispatch } from "react-redux";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
+  // const [blogs, setBlogs] = useState([]);
   // const [errorMessage, setErrorMessage] = useState(null)
   // const [successMessage, setSuccessMessage] = useState(null)
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
-  const sortBlogs = (blogs) => [...blogs].sort((a, b) => b.likes - a.likes);
-
   useEffect(() => {
-    blogService.getAll().then((initialBlogs) => {
-      setBlogs(sortBlogs(initialBlogs));
-    });
-  }, []);
+    // blogService.getAll().then((initialBlogs) => {
+    //   setBlogs(sortBlogs(initialBlogs));
+    dispatch(initialBlogs());
+  }, [dispatch]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
@@ -39,8 +38,7 @@ const App = () => {
 
   const addBlog = async (blogObject) => {
     try {
-      const returnedBlog = await blogService.create(blogObject);
-      setBlogs((prev) => sortBlogs([...prev, returnedBlog]));
+      await dispatch(appendBlog(blogObject));
       dispatch(setNotification(`${blogObject.title} added`, "success", 5));
 
       blogFormRef.current.toggleVisibility();
@@ -48,29 +46,6 @@ const App = () => {
       dispatch(
         setNotification(
           `Error adding blog ${error.response?.data?.error || error.message}`,
-          "error",
-          5
-        )
-      );
-    }
-  };
-
-  const handleLikes = async (id) => {
-    try {
-      const updatedBlog = await blogService.updateLikes(id);
-      console.log(updatedBlog);
-      setBlogs((prev) => {
-        const newBlogs = prev.map((blog) =>
-          blog.id === id ? updatedBlog : blog
-        );
-        return sortBlogs(newBlogs);
-      });
-      dispatch(setNotification(`${updatedBlog.title} updated`, "success", 5));
-    } catch (error) {
-      // Обработка ошибки, например, показать сообщение об ошибке
-      dispatch(
-        setNotification(
-          `Error updating blog ${error.response?.data?.error || error.message}`,
           "error",
           5
         )
@@ -113,29 +88,29 @@ const App = () => {
     setUser(null);
   };
 
-  const handleDelete = async (id) => {
-    try {
-      if (window.confirm("Do you want to delete this blog ?")) {
-        await blogService.deleteBlog(id);
-        setBlogs((prev) => {
-          const withoutDeleteBlog = prev.filter((blog) => blog.id !== id);
-          return sortBlogs(withoutDeleteBlog);
-        });
-      }
-      dispatch(setNotification("Deleted successfully", "success", 5));
-    } catch (error) {
-      // Обработка ошибки, например, показать сообщение об ошибке
-      dispatch(
-        setNotification(
-          `Error deleting blog  ${
-            error.response?.data?.error || error.message
-          }`,
-          "error",
-          5
-        )
-      );
-    }
-  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     if (window.confirm("Do you want to delete this blog ?")) {
+  //       await blogService.deleteBlog(id);
+  //       blogs((prev) => {
+  //         const withoutDeleteBlog = prev.filter((blog) => blog.id !== id);
+  //         return sortBlogs(withoutDeleteBlog);
+  //       });
+  //     }
+  //     dispatch(setNotification("Deleted successfully", "success", 5));
+  //   } catch (error) {
+  //     // Обработка ошибки, например, показать сообщение об ошибке
+  //     dispatch(
+  //       setNotification(
+  //         `Error deleting blog  ${
+  //           error.response?.data?.error || error.message
+  //         }`,
+  //         "error",
+  //         5
+  //       )
+  //     );
+  //   }
+  // };
 
   return (
     <div>
@@ -150,16 +125,7 @@ const App = () => {
           {blogForm()}
         </div>
       )}
-      <div className="blog-grid">
-        {blogs.map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            handleLikes={handleLikes}
-            handleDelete={handleDelete}
-          />
-        ))}
-      </div>
+      <Blogs />
       <Footer />
     </div>
   );
